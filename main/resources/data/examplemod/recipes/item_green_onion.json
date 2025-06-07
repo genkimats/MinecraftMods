@@ -3,7 +3,7 @@
   "pattern": [
     " A ",
     " B ",
-    " C "
+    "   "
   ],
   "key": {
     "A": {
@@ -11,9 +11,6 @@
     },
     "B": {
       "item": "minecraft:wheat"
-    },
-    "C": {
-      "item": "minecraft:potato"
     }
   },
   "result": {

@@ -91,8 +91,7 @@ public class BlockCookingPot extends Block {
             ItemStack newStack = new ItemStack(Items.BUCKET);
             pPlayer.setItemInHand(pHand, newStack);
             if (isFireBelow(pState, pLevel, pPos)) {
-                pLevel.setBlock(pPos, pState.setValue(MODE, HotPotMode.WATER), 3);
-                pLevel.scheduleTick(pPos, this, BOIL_TICKS);
+                pLevel.setBlock(pPos, pState.setValue(MODE, HotPotMode.BOIL), 3);
             } else {
                 pLevel.setBlock(pPos, pState.setValue(MODE, HotPotMode.WATER), 3);
             }
@@ -122,6 +121,9 @@ public class BlockCookingPot extends Block {
         if (item == ExampleMod.ITEM_LADLE && mode == HotPotMode.SOUP_DONE) {
             ItemStack newStack = new ItemStack(ExampleMod.ITEM_LADLE_SOUP);
             pPlayer.setItemInHand(pHand, newStack);
+
+            pLevel.setBlock(pPos, pState.setValue(MODE, HotPotMode.BOIL), 3);
+
             return InteractionResult.SUCCESS;
         }
 
@@ -129,6 +131,9 @@ public class BlockCookingPot extends Block {
         if (item == ExampleMod.ITEM_COLANDER && mode == HotPotMode.NOODLE) {
             ItemStack newStack = new ItemStack(ExampleMod.ITEM_COLANDER_NOODLE);
             pPlayer.setItemInHand(pHand, newStack);
+
+            pLevel.setBlock(pPos, pState.setValue(MODE, HotPotMode.EMPTY), 3);
+
             return InteractionResult.SUCCESS;
         }
 
