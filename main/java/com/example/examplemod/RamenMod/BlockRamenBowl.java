@@ -2,6 +2,7 @@ package com.example.examplemod.RamenMod;
 
 import com.example.examplemod.ExampleMod;
 import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.HoverEvent;
 import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.TextColor;
@@ -31,6 +32,8 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 
 import java.util.Random;
 import java.util.stream.Stream;
+
+import static com.example.examplemod.RamenMod.ItemColanderNoodle.FINISHED;
 
 public class BlockRamenBowl extends Block {
 
@@ -148,9 +151,10 @@ public class BlockRamenBowl extends Block {
     protected static InteractionResult insertNoodle(InteractionHand pHand, LevelAccessor pLevel, BlockPos pPos, BlockState pState, Player pPlayer) {
         int phase = pState.getValue(PHASE);
         ItemStack stack = pPlayer.getItemInHand(pHand);
+        CompoundTag tag = stack.getTag();
 
-        if (!(stack.getItem() == ExampleMod.ITEM_COLANDER_NOODLE && phase == 1)) {
-            return InteractionResult.PASS;
+        if (stack.getItem() != ExampleMod.ITEM_COLANDER_NOODLE || phase != 1 || tag == null || !tag.getBoolean(FINISHED)) {
+            return InteractionResult.FAIL;
         }
 
         ItemStack newStack = new ItemStack(ExampleMod.ITEM_COLANDER);
@@ -193,7 +197,7 @@ public class BlockRamenBowl extends Block {
         pPlayer.getFoodData().eat(4, 0.5f);
         pLevel.gameEvent(pPlayer, GameEvent.EAT, pPos);
 
-        // エフェクト付与
+        // エフェクト付与　＋　チャット
         Random random = new Random();
         MobEffect selectedEffect;
         String selectedEffectMessage;
@@ -207,6 +211,7 @@ public class BlockRamenBowl extends Block {
             selectedEffectName = MAIN_EFFECTS[randomNumber].effectName();
             textColor = TextColor.fromRgb(0x00FF00);
         } else {
+            // 最後の一口
             int randomNumber = random.nextInt(LAST_EFFECTS.length);
             selectedEffect = LAST_EFFECTS[randomNumber].effect();
             selectedEffectMessage = LAST_EFFECTS[randomNumber].effectMessage();
@@ -218,6 +223,7 @@ public class BlockRamenBowl extends Block {
         int potionLevel = 2;
 
         pPlayer.addEffect(new MobEffectInstance(selectedEffect, duration, potionLevel));
+
         if (pLevel.isClientSide()) {
             TextComponent effectName = new TextComponent(selectedEffectName);
             Style mainStyle = Style.EMPTY
@@ -228,7 +234,6 @@ public class BlockRamenBowl extends Block {
             effectMessage.setStyle(mainStyle);
 
             pPlayer.sendMessage(effectMessage, pPlayer.getUUID());
-
         }
 
 

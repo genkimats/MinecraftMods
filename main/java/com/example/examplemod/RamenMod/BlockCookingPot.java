@@ -112,7 +112,11 @@ public class BlockCookingPot extends Block {
 
         // 麺を入れる処理
         if (item == ExampleMod.ITEM_NOODLE && mode == HotPotMode.BOIL) {
-            pPlayer.setItemInHand(pHand, ItemStack.EMPTY);
+            if (itemStack.getCount() == 1) {
+                pPlayer.setItemInHand(pHand, ItemStack.EMPTY);
+            } else {
+                itemStack.setCount(itemStack.getCount() - 1);
+            }
             pLevel.setBlock(pPos, pState.setValue(MODE, HotPotMode.NOODLE), 3);
             return InteractionResult.SUCCESS;
         }
@@ -122,7 +126,7 @@ public class BlockCookingPot extends Block {
             ItemStack newStack = new ItemStack(ExampleMod.ITEM_LADLE_SOUP);
             pPlayer.setItemInHand(pHand, newStack);
 
-            pLevel.setBlock(pPos, pState.setValue(MODE, HotPotMode.BOIL), 3);
+            pLevel.setBlock(pPos, pState.setValue(MODE, HotPotMode.EMPTY), 3);
 
             return InteractionResult.SUCCESS;
         }
@@ -132,7 +136,7 @@ public class BlockCookingPot extends Block {
             ItemStack newStack = new ItemStack(ExampleMod.ITEM_COLANDER_NOODLE);
             pPlayer.setItemInHand(pHand, newStack);
 
-            pLevel.setBlock(pPos, pState.setValue(MODE, HotPotMode.EMPTY), 3);
+            pLevel.setBlock(pPos, pState.setValue(MODE, HotPotMode.BOIL), 3);
 
             return InteractionResult.SUCCESS;
         }
@@ -167,12 +171,5 @@ public class BlockCookingPot extends Block {
         BlockState belowState = pLevel.getBlockState(below);
 
         return belowState.is(Blocks.FIRE);
-//        HotPotMode mode = pState.getValue(MODE);
-//
-//        if (belowState.is(Blocks.FIRE) && (mode == HotPotMode.WATER)) {
-//            pLevel.setBlock(pPos, pState.setValue(MODE, HotPotMode.BOIL), 3);
-//        } else if (!(belowState.is(Blocks.FIRE)) && (mode == HotPotMode.BOIL)){
-//            pLevel.setBlock(pPos, pState.setValue(MODE, HotPotMode.WATER), 3);
-//        }
     }
 }
