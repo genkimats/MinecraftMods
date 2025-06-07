@@ -1,0 +1,24 @@
+{
+	"credit": "Made with Blockbench",
+	"texture_size": [32, 32],
+	"textures": {
+		"0": "examplemod:items/green_onion",
+		"particle": "examplemod:items/green_onion"
+	},
+	"elements": [
+		{
+			"from": [7, 0, 9],
+			"to": [9, 22, 10],
+			"rotation": {"angle": 0, "axis": "y", "origin": [7, 0, 0]},
+			"faces": {
+				"north": {"uv": [0, 0, 1, 11], "texture": "#0"},
+				"east": {"uv": [2, 0, 2.5, 11], "texture": "#0"},
+				"south": {"uv": [1, 0, 2, 11], "texture": "#0"},
+				"west": {"uv": [2.5, 0, 3, 11], "texture": "#0"},
+				"up": {"uv": [4, 0.5, 3, 0], "texture": "#0"},
+				"down": {"uv": [4, 0.5, 3, 1], "texture": "#0"}
+			}
+		}
+	],
+	"display": {}
+}

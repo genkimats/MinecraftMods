@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "   ",
+    " D ",
+    "ABC"
+  ],
+  "key": {
+    "A": {
+      "item": "minecraft:cooked_porkchop"
+    },
+    "B": {
+      "item": "examplemod:item_menma"
+    },
+    "C": {
+      "item": "minecraft:egg"
+    },
+    "D": {
+      "item": "examplemod:item_green_onion"
+    }
+  },
+  "result": {
+    "item": "examplemod:item_ramen_ingredient_set"
+  }
+}

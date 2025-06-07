@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "mode=empty": { "model": "examplemod:block/block_cooking_pot" },
+    "mode=water": { "model": "examplemod:block/block_cooking_pot_water" },
+    "mode=noodle": { "model": "examplemod:block/block_cooking_pot_noodle" },
+    "mode=boil": { "model": "examplemod:block/block_cooking_pot_hotwater" },
+    "mode=soup_beginning": { "model": "examplemod:block/block_cooking_pot_soup"},
+    "mode=soup_done": { "model": "examplemod:block/block_cooking_pot_soup_done"}
+  }
+}

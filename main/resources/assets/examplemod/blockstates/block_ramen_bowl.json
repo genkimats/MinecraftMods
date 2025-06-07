@@ -1,0 +1,12 @@
+{
+  "variants": {
+    "phase=0": { "model": "examplemod:block/block_ramen_0" },
+    "phase=1": { "model": "examplemod:block/block_ramen_1"},
+    "phase=2": { "model": "examplemod:block/block_ramen_2"},
+    "phase=3": { "model": "examplemod:block/block_ramen_3"},
+    "phase=4": { "model": "examplemod:block/block_ramen_4"},
+    "phase=5": { "model": "examplemod:block/block_ramen_5"},
+    "phase=6": { "model": "examplemod:block/block_ramen_6"},
+    "phase=7": { "model": "examplemod:block/block_ramen_7"}
+  }
+}
