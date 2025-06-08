@@ -179,11 +179,17 @@ public class ExampleMod {
     public static final Block BLOCK_COOKING_POT =
             new BlockCookingPot().setRegistryName(MODID, "block_cooking_pot");
 
+    public static final Block BLOCK_CUTTING_BOARD =
+            new BlockCuttingBoard().setRegistryName(MODID, "block_cutting_board");
+
     public static final Item ITEM_GREEN_ONION =
             new ItemGreenOnion().setRegistryName(MODID, "item_green_onion");
 
     public static final Item ITEM_MENMA =
             new ItemMenma().setRegistryName(MODID, "item_menma");
+
+    public static final Item ITEM_NOODLE_DOUGH =
+            new ItemNoodleDough().setRegistryName(MODID, "item_noodle_dough");
 
     public static final Item ITEM_NOODLE =
             new ItemNoodle().setRegistryName(MODID, "item_noodle");
@@ -205,6 +211,9 @@ public class ExampleMod {
 
     public static final Item ITEM_LADLE_SOUP =
             new ItemLadleSoup().setRegistryName(MODID, "item_ladle_soup");
+
+    public static final Item ITEM_KNIFE =
+            new ItemKnife().setRegistryName(MODID, "item_knife");
 
     public ExampleMod() {
         // Tipsの不死アイテム
@@ -261,6 +270,7 @@ public class ExampleMod {
             // ラーメンMOD
             new RegisterBlockData(BLOCK_RAMEN_BOWL),
             new RegisterBlockData(BLOCK_COOKING_POT),
+            new RegisterBlockData(BLOCK_CUTTING_BOARD),
 
         };
 
@@ -301,6 +311,8 @@ public class ExampleMod {
                 ITEM_CHOPSTICK,
                 ITEM_LADLE,
                 ITEM_LADLE_SOUP,
+                ITEM_KNIFE,
+                ITEM_NOODLE_DOUGH,
         };
 
         @SubscribeEvent

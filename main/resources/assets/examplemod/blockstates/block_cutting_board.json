@@ -1,0 +1,12 @@
+{
+  "variants": {
+    "mode=none,cuts=0": { "model": "examplemod:block/block_cutting_board" },
+    "mode=noodle,cuts=0": { "model": "examplemod:block/block_cutting_board_noodle_0" },
+    "mode=noodle,cuts=1": { "model": "examplemod:block/block_cutting_board_noodle_1" },
+    "mode=noodle,cuts=2": { "model": "examplemod:block/block_cutting_board_noodle_2" },
+    "mode=noodle,cuts=3": { "model": "examplemod:block/block_cutting_board_noodle_3" },
+    "mode=noodle,cuts=4": { "model": "examplemod:block/block_cutting_board_noodle_4" },
+    "mode=noodle,cuts=5": { "model": "examplemod:block/block_cutting_board_noodle_5" },
+    "mode=noodle,cuts=6": { "model": "examplemod:block/block_cutting_board_noodle_6" }
+  }
+}

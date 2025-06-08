@@ -2,6 +2,7 @@ package com.example.examplemod.RamenMod;
 
 import com.example.examplemod.ExampleMod;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.HoverEvent;
 import net.minecraft.network.chat.Style;
@@ -37,23 +38,6 @@ import static com.example.examplemod.RamenMod.ItemColanderNoodle.FINISHED;
 
 public class BlockRamenBowl extends Block {
 
-    public static final int PHASE_LENGTH = 8;
-
-    public record RamenEffects(MobEffect effect, String effectMessage, String effectName) { }
-
-    public static final RamenEffects[] MAIN_EFFECTS = new RamenEffects[] {
-            new RamenEffects(MobEffects.MOVEMENT_SPEED, "「一口目のうまさ」", "移動速度上昇"),
-            new RamenEffects(MobEffects.REGENERATION, "「食後の幸福感」", "再生")
-    };
-
-    public static final RamenEffects[] LAST_EFFECTS = new RamenEffects[] {
-            new RamenEffects(MobEffects.MOVEMENT_SLOWDOWN, "「後悔」", "移動速度低下"),
-            new RamenEffects(MobEffects.SATURATION, "「満足」", "満腹度回復"),
-    };
-
-
-    public static final IntegerProperty PHASE = IntegerProperty.create("phase", 0, PHASE_LENGTH - 1);
-
     public static final VoxelShape SHAPE = Stream.of(
             Block.box(6, 0, 6, 10, 1, 10),
             Block.box(5, 1, 6, 6, 2, 11),
@@ -82,6 +66,24 @@ public class BlockRamenBowl extends Block {
             Block.box(3, 6, 13, 14, 7, 14)
     ).reduce(Shapes.empty(), Shapes::or);
 
+
+    public static final int PHASE_LENGTH = 8;
+
+    public static final IntegerProperty PHASE = IntegerProperty.create("phase", 0, PHASE_LENGTH - 1);
+
+    public record RamenEffects(MobEffect effect, String effectMessage, String effectName) { }
+
+    public static final RamenEffects[] MAIN_EFFECTS = new RamenEffects[] {
+            new RamenEffects(MobEffects.MOVEMENT_SPEED, "「一口目のうまさ」", "移動速度上昇"),
+            new RamenEffects(MobEffects.REGENERATION, "「食後の幸福感」", "再生")
+    };
+
+    public static final RamenEffects[] LAST_EFFECTS = new RamenEffects[] {
+            new RamenEffects(MobEffects.MOVEMENT_SLOWDOWN, "「後悔」", "移動速度低下"),
+            new RamenEffects(MobEffects.SATURATION, "「満足」", "満腹度回復"),
+    };
+
+
     public BlockRamenBowl() {
         super(BlockBehaviour.Properties.of(Material.STONE).strength(10f)
                 .noOcclusion());
@@ -99,16 +101,16 @@ public class BlockRamenBowl extends Block {
     }
 
     @Override
-    public void attack(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer) {
-        int temp = pState.getValue(PHASE);
-
-        temp++;
-        if (temp >= PHASE_LENGTH) {
-            temp = 0;
+    public void animateTick(BlockState state, Level level, BlockPos pos, Random random) {
+        int phase = state.getValue(PHASE);
+        if (phase > 0 && random.nextFloat() < 0.25F) {
+            level.addParticle(ParticleTypes.CLOUD,
+                    pos.getX() + 0.5, pos.getY() + 0.6, pos.getZ() + 0.5,
+                    0.0, 0.03, 0.0);
         }
 
-        pLevel.setBlockAndUpdate(pPos, pState.setValue(PHASE, temp));
     }
+
 
     @Override
     public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
@@ -116,6 +118,7 @@ public class BlockRamenBowl extends Block {
 
         ItemStack itemStack = pPlayer.getItemInHand(pHand);
         Item item = itemStack.getItem();
+
         if (item == ExampleMod.ITEM_CHOPSTICK && phase > 2) {
             return eat(pLevel, pPos, pState, pPlayer);
         } else if (item == ExampleMod.ITEM_LADLE_SOUP && phase < 1) {

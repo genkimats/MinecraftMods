@@ -1,7 +1,9 @@
 package com.example.examplemod.RamenMod;
 
 import com.example.examplemod.ExampleMod;
+import com.ibm.icu.impl.locale.ParseStatus;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -29,13 +31,6 @@ import java.util.stream.Stream;
 
 public class BlockCookingPot extends Block {
 
-    public static final int TEMPS = 6;
-    public static final int SOUP_DONE_TICKS = 200;
-    public static final int BOIL_TICKS = 200;
-
-    public static final IntegerProperty TEMP = IntegerProperty.create("temp", 0, TEMPS - 1);
-    public static final EnumProperty<HotPotMode> MODE = EnumProperty.create("mode", HotPotMode.class);
-
     public static final VoxelShape SHAPE = Stream.of(
             Block.box(7, 14, 0, 9, 15, 1),
             Block.box(2, 0, 2, 14, 1, 14),
@@ -49,6 +44,13 @@ public class BlockCookingPot extends Block {
             Block.box(6, 14, 0, 7, 15, 2),
             Block.box(9, 14, 0, 10, 15, 2)
     ).reduce(Shapes.empty(), Shapes::or);
+
+
+    public static final int TEMPS = 6;
+    public static final int SOUP_DONE_TICKS = 200;
+
+    public static final IntegerProperty TEMP = IntegerProperty.create("temp", 0, TEMPS - 1);
+    public static final EnumProperty<HotPotMode> MODE = EnumProperty.create("mode", HotPotMode.class);
 
     public BlockCookingPot() {
         super(BlockBehaviour.Properties.of(Material.STONE).strength(10f));
@@ -68,16 +70,17 @@ public class BlockCookingPot extends Block {
     }
 
     @Override
-    public void attack(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer) {
-        int temp = pState.getValue(TEMP);
+    public void animateTick(BlockState state, Level level, BlockPos pos, Random random) {
+        HotPotMode mode = state.getValue(MODE);
 
-        temp++;
-        if (temp >= TEMPS) {
-            temp = 0;
+        if (mode == HotPotMode.BOIL || mode == HotPotMode.SOUP_BEGINNING || mode == HotPotMode.SOUP_DONE) {
+            level.addParticle(ParticleTypes.CLOUD,
+                    pos.getX() + 0.5, pos.getY() + 1.1, pos.getZ() + 0.5,
+                    0.0, 0.03, 0.0);
         }
-
-        pLevel.setBlockAndUpdate(pPos, pState.setValue(TEMP, temp));
     }
+
+
 
     @Override
     public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
