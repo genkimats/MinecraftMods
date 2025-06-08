@@ -53,7 +53,10 @@ public class ItemColanderNoodle extends Item {
     };
 
     public ItemColanderNoodle() {
-        super(new Properties().tab(CreativeModeTab.TAB_TOOLS));
+        super(new Properties()
+                .tab(CreativeModeTab.TAB_TOOLS)
+                .stacksTo(1)
+        );
     }
 
     @Override
@@ -74,8 +77,8 @@ public class ItemColanderNoodle extends Item {
             if (randomNumber == 0) {
                 int message_idx = random.nextInt(SUCCESS_MESSAGES.length);
                 message = SUCCESS_MESSAGES[message_idx];
+                System.out.println(message);
                 textColor = TextColor.fromRgb(0x00FF00);
-                tag.putBoolean(FINISHED, true);
             } else {
                 int message_idx = random.nextInt(FAIL_MESSAGES.length);
                 message = FAIL_MESSAGES[message_idx];
@@ -83,11 +86,15 @@ public class ItemColanderNoodle extends Item {
             }
 
 
-            if (pLevel.isClientSide()) {
+            if (!pLevel.isClientSide()) {
                 TextComponent effectMessage = new TextComponent(message);
                 effectMessage.setStyle(Style.EMPTY.withColor(textColor));
 
                 pPlayer.sendMessage(effectMessage, pPlayer.getUUID());
+            }
+
+            if (randomNumber == 0) {
+                tag.putBoolean(FINISHED, true);
             }
         }
 

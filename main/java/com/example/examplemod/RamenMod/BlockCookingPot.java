@@ -160,7 +160,7 @@ public class BlockCookingPot extends Block {
         HotPotMode mode = pState.getValue(MODE);
 
         if (isFireBelow(pState, pLevel, pPos) && (mode == HotPotMode.WATER)) {
-            pLevel.scheduleTick(pPos, this, BOIL_TICKS);
+            pLevel.setBlock(pPos, pState.setValue(MODE, HotPotMode.BOIL), 3);
         } else if (!isFireBelow(pState, pLevel, pPos) && (mode == HotPotMode.BOIL)) {
             pLevel.setBlock(pPos, pState.setValue(MODE, HotPotMode.WATER), 3);
         }
