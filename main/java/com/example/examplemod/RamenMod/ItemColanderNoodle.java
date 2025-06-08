@@ -75,11 +75,13 @@ public class ItemColanderNoodle extends Item {
             String message;
 
             if (randomNumber == 0) {
+                // 湯切り成功時
                 int message_idx = random.nextInt(SUCCESS_MESSAGES.length);
                 message = SUCCESS_MESSAGES[message_idx];
                 System.out.println(message);
                 textColor = TextColor.fromRgb(0x00FF00);
             } else {
+                // 湯切り失敗時
                 int message_idx = random.nextInt(FAIL_MESSAGES.length);
                 message = FAIL_MESSAGES[message_idx];
                 textColor = TextColor.fromRgb(0xD3D3D3);
@@ -100,11 +102,4 @@ public class ItemColanderNoodle extends Item {
 
         return InteractionResultHolder.sidedSuccess(stack, pLevel.isClientSide());
     }
-
-//    @Override
-//    public void appendHoverText(ItemStack stack, Level level, List<Component> tooltip, TooltipFlag flag) {
-//        boolean charged = stack.getOrCreateTag().getBoolean("Charged");
-//        tooltip.add(Component.literal("Charged: " + charged)
-//                .withStyle(charged ? ChatFormatting.GREEN : ChatFormatting.RED));
-//    }
 }
