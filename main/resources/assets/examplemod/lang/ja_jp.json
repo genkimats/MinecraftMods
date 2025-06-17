@@ -1,3 +1,17 @@
 {
-  "block.examplemod.block_myblock": "マイブロック"
+  "block.examplemod.block_myblock": "My Block",
+  "block.examplemod.block_ramen_bowl": "どんぶり",
+  "block.examplemod.block_cooking_pot": "寸胴鍋",
+  "block.examplemod.block_cutting_board": "まな板",
+  "item.examplemod.item_chopstick": "箸",
+  "item.examplemod.item_colander": "てぼ",
+  "item.examplemod.item_colander_noodle": "麺入りてぼ",
+  "item.examplemod.item_green_onion": "ネギ",
+  "item.examplemod.item_ladle": "おたま",
+  "item.examplemod.item_ladle_soup": "スープ入りおたま",
+  "item.examplemod.item_ramen_ingredient_set": "具材セット",
+  "item.examplemod.item_noodle": "麺",
+  "item.examplemod.item_noodle_dough": "麺生地",
+  "item.examplemod.item_menma": "めんま",
+  "item.examplemod.item_knife": "麺切り包丁"
 }

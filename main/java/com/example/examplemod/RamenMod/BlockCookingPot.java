@@ -47,7 +47,7 @@ public class BlockCookingPot extends Block {
 
 
     public static final int TEMPS = 6;
-    public static final int SOUP_DONE_TICKS = 200;
+    public static final int SOUP_DONE_TICKS = 1000;
 
     public static final IntegerProperty TEMP = IntegerProperty.create("temp", 0, TEMPS - 1);
     public static final EnumProperty<HotPotMode> MODE = EnumProperty.create("mode", HotPotMode.class);
@@ -74,9 +74,14 @@ public class BlockCookingPot extends Block {
         HotPotMode mode = state.getValue(MODE);
 
         if (mode == HotPotMode.BOIL || mode == HotPotMode.SOUP_BEGINNING || mode == HotPotMode.SOUP_DONE) {
+//            level.addParticle(ParticleTypes.SNOWFLAKE,
+//                    (double) pos.getX() + 0.5D, (double) pos.getY() + 1.1D, (double) pos.getZ() + 0.5D,
+//                    0.0D, 0.03D, 0.0D);
             level.addParticle(ParticleTypes.CLOUD,
-                    pos.getX() + 0.5, pos.getY() + 1.1, pos.getZ() + 0.5,
-                    0.0, 0.03, 0.0);
+                    pos.getX() + 0.5,
+                    pos.getY() + 1.0,
+                    pos.getZ() + 0.5,
+                    0.0, 0.05, 0.0);
         }
     }
 
@@ -91,8 +96,10 @@ public class BlockCookingPot extends Block {
 
         // 水を入れる処理（下に火があれば沸騰）
         if (item == Items.WATER_BUCKET && mode == HotPotMode.EMPTY) {
-            ItemStack newStack = new ItemStack(Items.BUCKET);
-            pPlayer.setItemInHand(pHand, newStack);
+            if (!pPlayer.isCreative()) {
+                ItemStack newStack = new ItemStack(Items.BUCKET);
+                pPlayer.setItemInHand(pHand, newStack);
+            }
             if (isFireBelow(pState, pLevel, pPos)) {
                 pLevel.setBlock(pPos, pState.setValue(MODE, HotPotMode.BOIL), 3);
             } else {

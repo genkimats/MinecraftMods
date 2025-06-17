@@ -120,11 +120,11 @@ public class BlockRamenBowl extends Block {
         Item item = itemStack.getItem();
 
         if (item == ExampleMod.ITEM_CHOPSTICK && phase > 2) {
+            // 食べる処理
             return eat(pLevel, pPos, pState, pPlayer);
         } else if (item == ExampleMod.ITEM_LADLE_SOUP && phase < 1) {
             // スープ入れる処理
             return insertSoup(pHand, pLevel, pPos, pState, pPlayer);
-
         } else if (item == ExampleMod.ITEM_COLANDER_NOODLE && phase == 1) {
             // 麺入れる処理
             return insertNoodle(pHand, pLevel, pPos, pState, pPlayer);
@@ -225,7 +225,9 @@ public class BlockRamenBowl extends Block {
         int duration = 1800;
         int potionLevel = 2;
 
-        pPlayer.addEffect(new MobEffectInstance(selectedEffect, duration, potionLevel));
+        if (!pLevel.isClientSide()) {
+            pPlayer.addEffect(new MobEffectInstance(selectedEffect, duration, potionLevel));
+        }
 
         if (pLevel.isClientSide()) {
             TextComponent effectName = new TextComponent(selectedEffectName);
